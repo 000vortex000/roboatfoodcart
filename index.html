@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background-color: black;
+      color: white;
+    }
+
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .btn {
+      background-color: #00bfff;
+      color: white;
+      border: none;
+      padding: 16px 36px;
+      font-size: 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .btn:hover {
+      background-color: #009acd;
+      transform: translateX(-50%) scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Local Video Background -->
+  <video autoplay muted loop playsinline>
+    <source src="video/Robot Eye.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Button -->
+  <button class="btn" onclick="window.location.href='order.html'">Tap to Order</button>
+
+</body>
+</html>

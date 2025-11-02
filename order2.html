@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueBite Food Ordering</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f0f6ff;
+    }
+
+    header {
+      background: linear-gradient(90deg, #007bff, #004aad);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .cart-btn {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      background-color: white;
+      color: #007bff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .cart-btn:hover {
+      background-color: #eaf1ff;
+      transform: scale(1.05);
+    }
+
+    .section-title {
+      text-align: center;
+      color: #004aad;
+      font-size: 26px;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .food-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 30px 40px;
+    }
+
+    .food-item {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .food-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .food-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .food-info {
+      padding: 18px;
+    }
+
+    .food-info h3 {
+      color: #002b70;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .food-info p {
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .add-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .add-btn:hover {
+      background-color: #004aad;
+      transform: scale(1.05);
+    }
+
+    /* Cart Modal */
+    .cart-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .cart-content {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .cart-content h2 {
+      margin-top: 0;
+      color: #007bff;
+      text-align: center;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .close-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-weight: bold;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .close-btn:hover {
+      background-color: #004aad;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    🍴 BlueBite Food Ordering
+    <button class="cart-btn" onclick="openCart()">View Cart 🛒</button>
+  </header>
+
+  <!-- INDIAN SECTION -->
+  <h2 class="section-title">🇮🇳 Indian Dishes</h2>
+  <div class="food-container">
+    <div class="food-item"><img src="https://i.ibb.co/tPXB3qL/chicken-biryani.jpg" alt="Chicken Biryani"><div class="food-info"><h3>Chicken Biryani</h3><p>₹180</p><button class="add-btn" onclick="addToCart('Chicken Biryani',180)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/MgWqPHj/paneer-butter-masala.jpg" alt="Paneer Butter Masala"><div class="food-info"><h3>Paneer Butter Masala</h3><p>₹150</p><button class="add-btn" onclick="addToCart('Paneer Butter Masala',150)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/qJVp9dh/butter-chicken.jpg" alt="Butter Chicken"><div class="food-info"><h3>Butter Chicken</h3><p>₹190</p><button class="add-btn" onclick="addToCart('Butter Chicken',190)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/PxQHzRJ/mutton-curry.jpg" alt="Mutton Curry"><div class="food-info"><h3>Mutton Curry</h3><p>₹220</p><button class="add-btn" onclick="addToCart('Mutton Curry',220)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/C6m51vT/masala-dosa.jpg" alt="Masala Dosa"><div class="food-info"><h3>Masala Dosa</h3><p>₹90</p><button class="add-btn" onclick="addToCart('Masala Dosa',90)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/R9vx1dr/veg-burger.jpg" alt="Veg Burger"><div class="food-info"><h3>Veg Burger</h3><p>₹120</p><button class="add-btn" onclick="addToCart('Veg Burger',120)">Add to Cart</button></div></div>
+  </div>
+
+  <!-- CHINESE SECTION -->
+  <h2 class="section-title">🥢 Chinese Delights</h2>
+  <div class="food-container">
+    <div class="food-item"><img src="https://i.ibb.co/MZQxJQm/veg-noodles.jpg" alt="Veg Noodles"><div class="food-info"><h3>Veg Noodles</h3><p>₹130</p><button class="add-btn" onclick="addToCart('Veg Noodles',130)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/b6BqM9x/spring-rolls.jpg" alt="Spring Rolls"><div class="food-info"><h3>Spring Rolls</h3><p>₹100</p><button class="add-btn" onclick="addToCart('Spring Rolls',100)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/S6BVgNx/chilli-chicken.jpg" alt="Chilli Chicken"><div class="food-info"><h3>Chilli Chicken</h3><p>₹180</p><button class="add-btn" onclick="addToCart('Chilli Chicken',180)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/WpP21sX/fried-rice.jpg" alt="Fried Rice"><div class="food-info"><h3>Fried Rice</h3><p>₹140</p><button class="add-btn" onclick="addToCart('Fried Rice',140)">Add to Cart</button></div></div>
+  </div>
+
+  <!-- FAST FOOD SECTION -->
+  <h2 class="section-title">🍔 Fast Food & Snacks</h2>
+  <div class="food-container">
+    <div class="food-item"><img src="https://i.ibb.co/pj6BzQk/french-fries.jpg" alt="French Fries"><div class="food-info"><h3>French Fries</h3><p>₹90</p><button class="add-btn" onclick="addToCart('French Fries',90)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/zNtx1Vn/chicken-sandwich.jpg" alt="Chicken Sandwich"><div class="food-info"><h3>Chicken Sandwich</h3><p>₹130</p><button class="add-btn" onclick="addToCart('Chicken Sandwich',130)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/G3T8YVG/margherita-pizza.jpg" alt="Margherita Pizza"><div class="food-info"><h3>Margherita Pizza</h3><p>₹250</p><button class="add-btn" onclick="addToCart('Margherita Pizza',250)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/Kq7ZtY6/veg-sandwich.jpg" alt="Veg Sandwich"><div class="food-info"><h3>Veg Sandwich</h3><p>₹100</p><button class="add-btn" onclick="addToCart('Veg Sandwich',100)">Add to Cart</button></div></div>
+  </div>
+
+  <!-- DESSERTS -->
+  <h2 class="section-title">🍰 Desserts & Drinks</h2>
+  <div class="food-container">
+    <div class="food-item"><img src="https://i.ibb.co/rmB5ZBk/gulab-jamun.jpg" alt="Gulab Jamun"><div class="food-info"><h3>Gulab Jamun</h3><p>₹70</p><button class="add-btn" onclick="addToCart('Gulab Jamun',70)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/XxKcyXB/chocolate-cake.jpg" alt="Chocolate Cake"><div class="food-info"><h3>Chocolate Cake</h3><p>₹150</p><button class="add-btn" onclick="addToCart('Chocolate Cake',150)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/YQBk98k/cold-coffee.jpg" alt="Cold Coffee"><div class="food-info"><h3>Cold Coffee</h3><p>₹120</p><button class="add-btn" onclick="addToCart('Cold Coffee',120)">Add to Cart</button></div></div>
+    <div class="food-item"><img src="https://i.ibb.co/wY7jFHY/ice-cream-sundae.jpg" alt="Ice Cream Sundae"><div class="food-info"><h3>Ice Cream Sundae</h3><p>₹90</p><button class="add-btn" onclick="addToCart('Ice Cream Sundae',90)">Add to Cart</button></div></div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="cart-modal">
+    <div class="cart-content">
+      <h2>Your Cart</h2>
+      <div id="cartItems"></div>
+      <h3 id="totalPrice">Total: ₹0</h3>
+      <button class="close-btn" onclick="closeCart()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    let cart = [];
+
+    function addToCart(item, price) {
+      cart.push({ item, price });
+      alert(item + " added to cart!");
+    }
+
+    function openCart() {
+      const modal = document.getElementById("cartModal");
+      const itemsContainer = document.getElementById("cartItems");
+      const totalDisplay = document.getElementById("totalPrice");
+
+      itemsContainer.innerHTML = "";
+      let total = 0;
+      cart.forEach(({ item, price }) => {
+        total += price;
+        itemsContainer.innerHTML += `
+          <div class="cart-item">
+            <span>${item}</span>
+            <span>₹${price.toFixed(2)}</span>
+          </div>
+        `;
+      });
+
+      totalDisplay.textContent = "Total: ₹" + total.toFixed(2);
+      modal.style.display = "flex";
+    }
+
+    function closeCart() {
+      document.getElementById("cartModal").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
